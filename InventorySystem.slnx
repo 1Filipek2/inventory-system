@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Backend/">
+    <Project Path="src/Backend/InventorySystem.Api.csproj" />
+  </Folder>
+</Solution>
