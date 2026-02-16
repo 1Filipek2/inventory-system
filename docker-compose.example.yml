@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: inventory-db
+    restart: always
+    environment:
+      POSTGRES_USER: <DB_USER>
+      POSTGRES_PASSWORD: <DB_PASSWORD>
+      POSTGRES_DB: InventoryDb
+    ports:
+      - "5444:5432"
+
+  backend:
+    build: ./src/Backend
+    container_name: inventory-api
+    depends_on:
+      - db
+    ports:
+      - "5000:8080"
+    environment:
+      - ConnectionStrings__DefaultConnection=Host=db;Database=InventoryDb;Username=<DB_USER>;Password=<DB_PASSWORD>
+
+  frontend:
+    build: ./src/Frontend
+    container_name: inventory-web
+    depends_on:
+      - backend
+    ports:
+      - "3001:80"
