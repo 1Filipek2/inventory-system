@@ -10,6 +10,18 @@ builder.Services.AddDbContext<InventoryDbContext>(options =>
 
 builder.Services.AddOpenApi();
 
+builder.Services.AddControllers();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("SpecificOrigins", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -18,5 +30,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("SpecificOrigins"); 
+app.MapControllers();
 
 app.Run();
