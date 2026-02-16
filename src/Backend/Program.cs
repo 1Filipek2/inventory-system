@@ -24,13 +24,35 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<InventoryDbContext>();
+
+    var retries = 10;
+    for (int i = 0; i < retries; i++)
+    {
+        try
+        {
+            await context.Database.MigrateAsync();
+            Console.WriteLine("--> Database migration applied successfully.");
+            break;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"--> Database not ready yet (attempt {i+1}/{retries}): {ex.Message}");
+            await Task.Delay(5000);
+        }
+    }
+}
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
 app.UseHttpsRedirection();
-app.UseCors("SpecificOrigins"); 
+app.UseCors("SpecificOrigins");
 app.MapControllers();
 
 app.Run();
