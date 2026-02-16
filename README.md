@@ -1,5 +1,7 @@
 # Inventory System
 
+![Inventory System](public/images/inv-sys.png)
+
 [![Backend Language](https://img.shields.io/badge/backend-C%23_.NET-512BD4.svg?logo=dotnet)](https://dotnet.microsoft.com/)
 [![Frontend Language](https://img.shields.io/badge/frontend-TypeScript-3178C6.svg?logo=typescript)](https://www.typescriptlang.org/)
 [![Frontend Framework](https://img.shields.io/badge/framework-React-61DAFB.svg?logo=react)](https://react.dev/)
