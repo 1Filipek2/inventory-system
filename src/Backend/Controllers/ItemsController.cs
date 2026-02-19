@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using InventorySystem.Models;
+using InventorySystem.Services;
 
 namespace InventorySystem.Data;
 
@@ -8,73 +9,44 @@ namespace InventorySystem.Data;
 [Route("api/[controller]")]
 public class ItemsController : ControllerBase
 {
-    private readonly InventoryDbContext _context;
+    private readonly IItemService _itemService;
 
-    public ItemsController(InventoryDbContext context)
+    public ItemsController(IItemService itemService)
     {
-        _context = context;
+        _itemService = itemService;
     }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Item>>> GetItems()
     {
-        var items = await _context.Items.ToListAsync();
-        return Ok(items);
+        return Ok(await _itemService.GetAllItemsAsync());
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Item>> GetItem(Guid id)
     {
-        var item = await _context.Items.FindAsync(id);
-
-        if (item == null)
-            return NotFound();
-
-        return Ok(item);
+        var item = await _itemService.GetItemByIdAsync(id);
+        return item == null ? NotFound() : Ok(item);
     }
 
     [HttpPost]
     public async Task<ActionResult<Item>> CreateItem(Item item)
     {
-        _context.Items.Add(item);
-        await _context.SaveChangesAsync();
-
-        return CreatedAtAction(nameof(GetItem), new { id = item.Id }, item);
+        var created = await _itemService.CreateItemAsync(item);
+        return CreatedAtAction(nameof(GetItem), new { id = created.Id }, created);
     }
 
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateItem(Guid id, Item item)
     {
-        if (id != item.Id)
-            return BadRequest();
-
-        _context.Entry(item).State = EntityState.Modified;
-
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!await _context.Items.AnyAsync(e => e.Id == id))
-                return NotFound();
-            else
-                throw;
-        }
-
-        return NoContent();
+        var success = await _itemService.UpdateItemAsync(id, item);
+        return success ? NoContent() : BadRequest();
     }
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteItem(Guid id)
     {
-        var deleted = await _context.Items
-            .Where(x => x.Id == id)
-            .ExecuteDeleteAsync();
-
-        if (deleted == 0)
-            return NotFound();
-
-        return NoContent();
+        var success = await _itemService.DeleteItemAsync(id);
+        return success ? NoContent() : NotFound();
     }
 }

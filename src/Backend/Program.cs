@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using InventorySystem.Data;
+using InventorySystem.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader();
     });
 });
+builder.Services.AddScoped<IItemService, ItemService>();
 
 var app = builder.Build();
 
