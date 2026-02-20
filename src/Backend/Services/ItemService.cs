@@ -13,27 +13,27 @@ public class ItemService : IItemService
         _context = context;
     }
 
-    public async Task<IEnumerable<Item>> GetAllItemsAsync() 
-        => await _context.Items.ToListAsync();
+    public async Task<IEnumerable<Item>> GetAllItemsAsync(CancellationToken ct = default) 
+        => await _context.Items.ToListAsync(ct);
 
-    public async Task<Item?> GetItemByIdAsync(Guid id) 
-        => await _context.Items.FindAsync(id);
+    public async Task<Item?> GetItemByIdAsync(Guid id, CancellationToken ct = default) 
+        => await _context.Items.FindAsync([id], ct);
 
-    public async Task<Item> CreateItemAsync(Item item)
+    public async Task<Item> CreateItemAsync(Item item, CancellationToken ct = default)
     {
         _context.Items.Add(item);
-        await _context.SaveChangesAsync();
+        await _context.SaveChangesAsync(ct);
         return item;
     }
 
-    public async Task<bool> UpdateItemAsync(Guid id, Item item)
+    public async Task<bool> UpdateItemAsync(Guid id, Item item, CancellationToken ct = default)
     {
         if (id != item.Id) return false;
         
         _context.Entry(item).State = EntityState.Modified;
         try
         {
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(ct);
             return true;
         }
         catch (DbUpdateConcurrencyException)
@@ -42,11 +42,13 @@ public class ItemService : IItemService
         }
     }
 
-    public async Task<bool> DeleteItemAsync(Guid id)
+    public async Task<bool> DeleteItemAsync(Guid id, CancellationToken ct = default)
     {
-        var deleted = await _context.Items
-            .Where(x => x.Id == id)
-            .ExecuteDeleteAsync();
-        return deleted > 0;
+        var item = await _context.Items.FindAsync([id], ct);
+        if (item == null) return false;
+
+        _context.Items.Remove(item);
+        await _context.SaveChangesAsync(ct);
+        return true;
     }
 }

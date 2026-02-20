@@ -44,24 +44,24 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900">
+    <div className="min-h-screen bg-[#DDDAD0] text-[#57564F] font-sans selection:bg-indigo-100 selection:text-[#57564F]">
       <div className="max-w-6xl mx-auto px-6 py-12">
         
         <header className="mb-8 flex flex-col md:flex-row md:items-end justify-between border-b border-slate-200 pb-6">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-slate-900">Inventory Management</h1>
-            <p className="mt-1 text-sm text-slate-500 font-medium">System overview & stock control</p>
+            <h1 className="text-3xl font-bold tracking-tight text-[#57564F]">Inventory Management</h1>
+            <p className="mt-1 text-sm text-[#7A7A73] font-medium">System overview & stock control</p>
           </div>
           <div className="mt-4 md:mt-0 text-right">
             <div className="text-xs font-semibold uppercase tracking-wider text-slate-400">Total Items</div>
-            <div className="text-2xl font-mono font-bold text-indigo-600 tabular-nums">
+            <div className="text-2xl font-mono font-bold text-[#57564F] tabular-nums">
               {loading ? '-' : items.length}
             </div>
           </div>
         </header>
 
         <main className="grid gap-8">
-          <section className="bg-white rounded-md shadow-sm border border-slate-200">
+          <section className="bg-[#FFFF] rounded-md shadow-sm border border-slate-200">
             <AddItemForm onAdd={handleAdd} />
           </section>
 
@@ -73,8 +73,8 @@ export default function App() {
               </div>
             ) : items.length === 0 ? (
               <div className="bg-white py-16 text-center rounded-md border border-dashed border-slate-300">
-                <p className="text-slate-900 font-medium">No items in inventory</p>
-                <p className="text-slate-500 text-sm mt-1">Add your first product above to get started.</p>
+                <p className="text-[#57564F] font-medium">No items in inventory</p>
+                <p className="text-[#7A7A73] text-sm mt-1">Add your first product above to get started.</p>
               </div>
             ) : (
               <InventoryTable items={items} onDelete={handleDelete} onUpdate={handleUpdate} />

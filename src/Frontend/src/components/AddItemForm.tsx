@@ -27,13 +27,13 @@ export default function AddItemForm({ onAdd }: AddItemFormProps) {
     }
   };
 
-  const inputClass = "w-full bg-white border border-slate-300 rounded-md px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600 transition-all hover:border-slate-400";
+  const inputClass = "w-full bg-white border border-slate-300 rounded-md px-3 py-2.5 text-sm text-[#57564F] placeholder:text-slate-400 focus:outline-none focus:border-indigo-600 focus:ring-1 focus:ring-indigo-600 transition-all hover:border-slate-400";
   const labelClass = "block text-xs font-semibold text-slate-700 mb-1.5 uppercase tracking-wide";
 
   return (
     <form onSubmit={handleSubmit} className="p-6">
       <div className="flex items-center justify-between mb-6">
-        <h3 className="text-base font-bold text-slate-900">Add New Stock</h3>
+        <h3 className="text-base font-bold text-[#57564F]">Add New Stock</h3>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-end">
@@ -61,7 +61,7 @@ export default function AddItemForm({ onAdd }: AddItemFormProps) {
         <div className="md:col-span-1">
             <button 
             disabled={saving}
-            className="w-full h-10.5 bg-slate-900 text-white rounded-md text-sm font-semibold hover:bg-indigo-600 active:bg-indigo-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+            className="w-full h-10.5 bg-[#57564F] text-white rounded-md text-sm font-semibold hover:bg-[#7A7A73] active:bg-[#DDDAD0] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
             >
             {saving ? (
                 <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />

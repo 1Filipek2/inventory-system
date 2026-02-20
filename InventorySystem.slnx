@@ -3,4 +3,7 @@
   <Folder Name="/src/Backend/">
     <Project Path="src/Backend/InventorySystem.Api.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/InventorySystem.Tests/InventorySystem.Tests.csproj" />
+  </Folder>
 </Solution>

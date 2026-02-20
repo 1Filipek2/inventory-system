@@ -59,12 +59,12 @@ export default function InventoryRow({ item, onDelete, onUpdate }: InventoryRowP
       
       {/* name */}
       <td className="p-4 align-top">
-        <div className="font-semibold text-sm text-slate-900">{item.name}</div>
+        <div className="font-semibold text-sm text-[#57564F]">{item.name}</div>
         <div className="text-[10px] text-slate-400 font-mono mt-0.5">ID: {item.id.slice(0,8)}</div>
       </td>
       
       {/* description */}
-      <td className="p-4 align-top text-sm text-slate-500 leading-relaxed">
+      <td className="p-4 align-top text-sm text-[#7A7A73] leading-relaxed">
         {item.description || <span className="text-slate-300 italic">-</span>}
       </td>
       
@@ -89,7 +89,7 @@ export default function InventoryRow({ item, onDelete, onUpdate }: InventoryRowP
       </td>
 
       {/* price*/}
-      <td className="p-4 align-top text-right font-medium text-sm text-slate-900 tabular-nums font-mono">
+      <td className="p-4 align-top text-right font-medium text-sm text-[#57564F] tabular-nums font-mono">
         {isEditing ? (
           <input 
             className={`${inputBase} ${error && error.includes('Price') ? inputError : inputNormal}`}
@@ -107,10 +107,10 @@ export default function InventoryRow({ item, onDelete, onUpdate }: InventoryRowP
         <div className="flex items-center justify-end gap-2">
           {isEditing ? (
             <>
-              <button onClick={handleSave} className="text-xs font-bold text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50 px-2 py-1 rounded transition-colors">
+              <button onClick={handleSave} className="text-xs font-bold text-[#4CBB17] hover:text-[#006742] hover:bg-indigo-50 px-2 py-1 rounded transition-colors">
                 SAVE
               </button>
-              <button onClick={handleCancel} className="text-xs font-medium text-slate-500 hover:text-slate-700 hover:bg-slate-100 px-2 py-1 rounded transition-colors">
+              <button onClick={handleCancel} className="text-xs font-medium text-red-600 hover:text-red-800 hover:bg-slate-100 px-2 py-1 rounded transition-colors">
                 ESC
               </button>
             </>
